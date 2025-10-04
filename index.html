@@ -13,61 +13,92 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: url("math.jpg") no-repeat center center/cover; /* ใช้ภาพพื้นหลังเหมือนใน Tkinter */
+      background: url("math.jpg") no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
     }
+
     #game-container {
       text-align: center;
-      background: #4de3e6;
-      padding: 20px;
+      background: #a4edf0;
+      padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       width: 90%;
-      max-width: 600px;
+      max-width: 400px;
     }
+
     h1 {
       color: #ff5396;
+      margin-bottom: 10px;
     }
+
+    #question {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #ff5396;
+    }
+
+    #answer {
+      font-size: 20px;
+      padding: 10px;
+      width: 80%;
+      text-align: center;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 2px solid #ff5396;
+      outline: none;
+    }
+
     button {
       font-size: 18px;
       background-color: #ff5396;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 25px;
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
     }
+
     button:hover {
       background-color: #cf007f;
     }
-    #question, #score, #timer {
-      margin: 20px 0;
-      font-size: 22px;
+
+    #score, #timer {
+      margin-top: 10px;
+      font-size: 20px;
       color: #333;
     }
-    #answer {
+
+    #start-button {
       font-size: 20px;
-      padding: 8px;
-      width: calc(100% - 40px);
-      max-width: 300px;
-      text-align: center;
-      margin: 0 auto;
-      display: block;
-      border-radius: 8px;
-      border: 2px solid #ff5396;
+      background-color: #ff5396;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #start-button:hover {
+      background-color: #cf007f;
     }
   </style>
 </head>
 <body>
   <div id="game-container">
-    <h1>เกม คณิต คิด หรรษา</h1>
+    <h1>เกมคณิตคิดหรรษา</h1>
     <button id="start-button">เริ่มเกม</button>
+
     <div id="game" style="display: none;">
-      <div id="timer">เวลา: 1 นาที 30 วินาที</div>
       <div id="question">คำถามจะแสดงที่นี่</div>
-      <input type="text" id="answer" placeholder="พิมพ์คำตอบของคุณ">
+      <input type="text" id="answer" placeholder="คำตอบ">
       <button id="check-button">ตรวจสอบ</button>
       <div id="score">คะแนน: 0</div>
+      <div id="timer">เวลา: 1 นาที 30 วินาที</div>
     </div>
   </div>
 
@@ -101,10 +132,8 @@
       const operation = operations[Math.floor(Math.random() * operations.length)];
 
       if (operation === '/') {
-        while (num2 === 0) {
-          num2 = Math.floor(Math.random() * 20) + 1;
-        }
-        num1 = num1 * num2; // ทำให้หารลงตัว
+        while (num2 === 0) num2 = Math.floor(Math.random() * 20) + 1;
+        num1 = num1 * num2;
         answer = parseFloat((num1 / num2).toFixed(2));
       } else if (operation === '+') {
         answer = num1 + num2;
@@ -137,11 +166,8 @@
       numQuestions++;
       scoreDisplay.textContent = `คะแนน: ${score}`;
 
-      if (numQuestions >= totalQuestions) {
-        endGame();
-      } else {
-        generateQuestion();
-      }
+      if (numQuestions >= totalQuestions) endGame();
+      else generateQuestion();
     }
 
     function startTimer() {
